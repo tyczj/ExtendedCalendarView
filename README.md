@@ -35,6 +35,18 @@ All events are stored in a content provider for easy access and the ability to h
 if you dont want other apps to have access to your database make you add this attribute to the provider 
     
     android:permission="signature"    
+    
+Current database columns
+
+    id - database id of the event
+    event (Text) - name of the event
+    location (Text) - where the event is
+    description (Text) - information about the event
+    start (Integer) - when the event starts
+    end (Integer) - when the event ends
+    start_day (Integer) - julian start day
+    end_day (Integer) - julian end day
+    color (Integer) - the color of the event
 
 Adding Events
 =============
