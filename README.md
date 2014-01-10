@@ -1,7 +1,7 @@
 ExtendedCalendarView
 ====================
 
-Currently there is no easy way of showing a calendar with the ability to display events on days ExtendedCalendarView is meant to solve that problem.
+Currently there is no easy way of showing a calendar with the ability to display events on days, ExtendedCalendarView is meant to solve that problem.
 
 Usage
 =====
