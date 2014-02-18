@@ -111,19 +111,19 @@ public class CalendarAdapter extends BaseAdapter{
 			if(colors.contains(0)){
 				iv.setVisibility(View.VISIBLE);
 			}
-			if(colors.contains(1)){
+			if(colors.contains(2)){
 				blue.setVisibility(View.VISIBLE);
 			}
-			if(colors.contains(2)){
+			if(colors.contains(4)){
 				purple.setVisibility(View.VISIBLE);
 			}
-			if(colors.contains(3)){
+			if(colors.contains(5)){
 				green.setVisibility(View.VISIBLE);
 			}
-			if(colors.contains(4)){
+			if(colors.contains(3)){
 				orange.setVisibility(View.VISIBLE);
 			}
-			if(colors.contains(5)){
+			if(colors.contains(1)){
 				red.setVisibility(View.VISIBLE);
 			}
 			

@@ -120,8 +120,8 @@ public class Day{
 		@Override
 		protected Void doInBackground(Void... params) {
 			Cursor c = context.getContentResolver().query(CalendarProvider.CONTENT_URI,new String[] {CalendarProvider.ID,CalendarProvider.EVENT,
-					CalendarProvider.DESCRIPTION,CalendarProvider.LOCATION,CalendarProvider.START,CalendarProvider.END,CalendarProvider.COLOR},"?>="+CalendarProvider.START_DAY+" AND "+CalendarProvider.END_DAY+"<=? AND " + CalendarProvider.END_DAY+">=?",
-					new String[] {String.valueOf(startDay),String.valueOf(monthEndDay),String.valueOf(startDay)}, null);
+					CalendarProvider.DESCRIPTION,CalendarProvider.LOCATION,CalendarProvider.START,CalendarProvider.END,CalendarProvider.COLOR},"?>="+CalendarProvider.START_DAY+" AND "+ CalendarProvider.END_DAY+">=?",
+					new String[] {String.valueOf(startDay),String.valueOf(startDay)}, null);
 			if(c != null && c.moveToFirst()){
 				do{
 					Event event = new Event(c.getLong(0),c.getLong(4),c.getLong(5));
