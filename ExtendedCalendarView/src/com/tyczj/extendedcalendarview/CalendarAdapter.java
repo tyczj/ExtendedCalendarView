@@ -69,81 +69,100 @@ public class CalendarAdapter extends BaseAdapter{
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		
-		if(v == null){
-			LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.day_view, null);
-		}
-		
-		TextView dayTV = (TextView)v.findViewById(R.id.textView1);
-		RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
-		ImageView iv = (ImageView)v.findViewById(R.id.imageView1);
-		ImageView blue = (ImageView)v.findViewById(R.id.imageView2);
-		ImageView purple = (ImageView)v.findViewById(R.id.imageView3);
-		ImageView green = (ImageView)v.findViewById(R.id.imageView4);
-		ImageView orange = (ImageView)v.findViewById(R.id.imageView5);
-		ImageView red = (ImageView)v.findViewById(R.id.imageView6);	
-		
-		blue.setVisibility(View.VISIBLE);
-		purple.setVisibility(View.VISIBLE);
-		green.setVisibility(View.VISIBLE);
-		purple.setVisibility(View.VISIBLE);
-		orange.setVisibility(View.VISIBLE);
-		red.setVisibility(View.VISIBLE);
-		
-		iv.setVisibility(View.VISIBLE);
-		dayTV.setVisibility(View.VISIBLE);
-		rl.setVisibility(View.VISIBLE);
-		
-		Day day = dayList.get(position);
-		
-		if(day.getNumOfEvenets() > 0){
-			Set<Integer> colors = day.getColors();
+		LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		if(position >= 0 && position < 7){
+			v = vi.inflate(R.layout.day_of_week, null);
+			TextView day = (TextView)v.findViewById(R.id.textView1);
 			
-			iv.setVisibility(View.INVISIBLE);
-			blue.setVisibility(View.INVISIBLE);
-			purple.setVisibility(View.INVISIBLE);
-			green.setVisibility(View.INVISIBLE);
-			purple.setVisibility(View.INVISIBLE);
-			orange.setVisibility(View.INVISIBLE);
-			red.setVisibility(View.INVISIBLE);
-			
-			if(colors.contains(0)){
-				iv.setVisibility(View.VISIBLE);
-			}
-			if(colors.contains(2)){
-				blue.setVisibility(View.VISIBLE);
-			}
-			if(colors.contains(4)){
-				purple.setVisibility(View.VISIBLE);
-			}
-			if(colors.contains(5)){
-				green.setVisibility(View.VISIBLE);
-			}
-			if(colors.contains(3)){
-				orange.setVisibility(View.VISIBLE);
-			}
-			if(colors.contains(1)){
-				red.setVisibility(View.VISIBLE);
+			if(position == 0){
+				day.setText(R.string.sunday);
+			}else if(position == 1){
+				day.setText(R.string.monday);
+			}else if(position == 2){
+				day.setText(R.string.tuesday);
+			}else if(position == 3){
+				day.setText(R.string.wednesday);
+			}else if(position == 4){
+				day.setText(R.string.thursday);
+			}else if(position == 5){
+				day.setText(R.string.friday);
+			}else if(position == 6){
+				day.setText(R.string.saturday);
 			}
 			
 		}else{
-			iv.setVisibility(View.INVISIBLE);
-			blue.setVisibility(View.INVISIBLE);
-			purple.setVisibility(View.INVISIBLE);
-			green.setVisibility(View.INVISIBLE);
-			purple.setVisibility(View.INVISIBLE);
-			orange.setVisibility(View.INVISIBLE);
-			red.setVisibility(View.INVISIBLE);
-		}
 			
-		if(day.getDay() == 0){
-			rl.setVisibility(View.GONE);
-		}else{
+	        v = vi.inflate(R.layout.day_view, null);
+			
+			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
+			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
+			ImageView iv = (ImageView)v.findViewById(R.id.imageView1);
+			ImageView blue = (ImageView)v.findViewById(R.id.imageView2);
+			ImageView purple = (ImageView)v.findViewById(R.id.imageView3);
+			ImageView green = (ImageView)v.findViewById(R.id.imageView4);
+			ImageView orange = (ImageView)v.findViewById(R.id.imageView5);
+			ImageView red = (ImageView)v.findViewById(R.id.imageView6);	
+			
+			blue.setVisibility(View.VISIBLE);
+			purple.setVisibility(View.VISIBLE);
+			green.setVisibility(View.VISIBLE);
+			purple.setVisibility(View.VISIBLE);
+			orange.setVisibility(View.VISIBLE);
+			red.setVisibility(View.VISIBLE);
+			
+			iv.setVisibility(View.VISIBLE);
 			dayTV.setVisibility(View.VISIBLE);
-			dayTV.setText(String.valueOf(day.getDay()));
+			rl.setVisibility(View.VISIBLE);
+			
+			Day day = dayList.get(position);
+			
+			if(day.getNumOfEvenets() > 0){
+				Set<Integer> colors = day.getColors();
+				
+				iv.setVisibility(View.INVISIBLE);
+				blue.setVisibility(View.INVISIBLE);
+				purple.setVisibility(View.INVISIBLE);
+				green.setVisibility(View.INVISIBLE);
+				purple.setVisibility(View.INVISIBLE);
+				orange.setVisibility(View.INVISIBLE);
+				red.setVisibility(View.INVISIBLE);
+				
+				if(colors.contains(0)){
+					iv.setVisibility(View.VISIBLE);
+				}
+				if(colors.contains(2)){
+					blue.setVisibility(View.VISIBLE);
+				}
+				if(colors.contains(4)){
+					purple.setVisibility(View.VISIBLE);
+				}
+				if(colors.contains(5)){
+					green.setVisibility(View.VISIBLE);
+				}
+				if(colors.contains(3)){
+					orange.setVisibility(View.VISIBLE);
+				}
+				if(colors.contains(1)){
+					red.setVisibility(View.VISIBLE);
+				}
+				
+			}else{
+				iv.setVisibility(View.INVISIBLE);
+				blue.setVisibility(View.INVISIBLE);
+				purple.setVisibility(View.INVISIBLE);
+				green.setVisibility(View.INVISIBLE);
+				purple.setVisibility(View.INVISIBLE);
+				orange.setVisibility(View.INVISIBLE);
+				red.setVisibility(View.INVISIBLE);
+			}
+				
+			if(day.getDay() == 0){
+				rl.setVisibility(View.GONE);
+			}else{
+				dayTV.setVisibility(View.VISIBLE);
+				dayTV.setText(String.valueOf(day.getDay()));
+			}
 		}
-		
 		
 		return v;
 	}
@@ -153,7 +172,7 @@ public class CalendarAdapter extends BaseAdapter{
     	// clear items
     	dayList.clear();
     	
-    	int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+    	int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH)+7;
         int firstDay = (int)cal.get(Calendar.DAY_OF_WEEK);
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -171,14 +190,14 @@ public class CalendarAdapter extends BaseAdapter{
         
         // populate empty days before first real day
         if(firstDay>1) {
-	        for(j=0;j<firstDay-FIRST_DAY_OF_WEEK;j++) {
+	        for(j=0;j<(firstDay-FIRST_DAY_OF_WEEK)+7;j++) {
 	        	days[j] = "";
 	        	Day d = new Day(context,0,0,0);
 	        	dayList.add(d);
 	        }
         }
 	    else {
-	    	for(j=0;j<FIRST_DAY_OF_WEEK*6;j++) {
+	    	for(j=0;j<(FIRST_DAY_OF_WEEK*6)+7;j++) {
 	        	days[j] = "";
 	        	Day d = new Day(context,0,0,0);
 	        	dayList.add(d);
@@ -189,7 +208,7 @@ public class CalendarAdapter extends BaseAdapter{
         // populate days
         int dayNumber = 1;
         
-        if(j>0 && dayList.size() > 0){
+        if(j>0 && dayList.size() > 0 && j != 1){
         	dayList.remove(j-1);
         }
         

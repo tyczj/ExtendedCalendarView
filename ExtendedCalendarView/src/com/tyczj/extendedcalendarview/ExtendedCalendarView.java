@@ -107,93 +107,12 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		
 		addView(base);
 		
-		RelativeLayout days = new RelativeLayout(context);
-		days.setId(12);
-		params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.BELOW,4);
-		params.topMargin = 20;
-		days.setLayoutParams(params);
-		
-		int leftMargin = getResources().getDimensionPixelOffset(R.dimen.day_margin);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		TextView sun = new TextView(context);
-		sun.setText(R.string.sunday);
-		sun.setLayoutParams(params);
-		sun.setId(11);
-		
-		days.addView(sun);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.leftMargin = leftMargin;
-		params.addRule(RelativeLayout.RIGHT_OF,sun.getId());
-		TextView mon = new TextView(context);
-		mon.setLayoutParams(params);
-		mon.setText(R.string.monday);
-		mon.setId(5);
-		
-		days.addView(mon);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.leftMargin = leftMargin;
-		params.addRule(RelativeLayout.RIGHT_OF,mon.getId());
-		TextView tue = new TextView(context);
-		tue.setText(R.string.tuesday);
-		tue.setLayoutParams(params);
-		tue.setId(6);
-		
-		days.addView(tue);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.leftMargin = leftMargin;
-		params.addRule(RelativeLayout.RIGHT_OF,tue.getId());
-		TextView wed = new TextView(context);
-		wed.setText(R.string.wednesday);
-		wed.setLayoutParams(params);
-		wed.setId(7);
-		
-		days.addView(wed);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.leftMargin = leftMargin;
-		params.addRule(RelativeLayout.RIGHT_OF,wed.getId());
-		TextView thu = new TextView(context);
-		thu.setText(R.string.thursday);
-		thu.setLayoutParams(params);
-		thu.setId(8);
-		
-		days.addView(thu);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.leftMargin = leftMargin;
-		params.addRule(RelativeLayout.RIGHT_OF,thu.getId());
-		TextView fri = new TextView(context);
-		fri.setText(R.string.friday);
-		fri.setLayoutParams(params);
-		fri.setId(9);
-		
-		days.addView(fri);
-		
-		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.leftMargin = leftMargin;
-		params.addRule(RelativeLayout.RIGHT_OF,fri.getId());
-		TextView sat = new TextView(context);
-		sat.setText(R.string.saturday);
-		sat.setLayoutParams(params);
-		sat.setId(10);
-		
-		days.addView(sat);
-		
-		addView(days);
-		
 		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 //		params.topMargin = 20;
 		params.bottomMargin = 20;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		params.addRule(RelativeLayout.BELOW, days.getId());
+		params.addRule(RelativeLayout.BELOW, base.getId());
 		
 		calendar = new GridView(context);
 		calendar.setLayoutParams(params);
@@ -213,7 +132,9 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if(dayListener != null){
 			Day d = (Day) mAdapter.getItem(arg2);
-			dayListener.onDayClicked(arg0, arg1, arg2, arg3,d);
+			if(d.getDay() != 0){
+				dayListener.onDayClicked(arg0, arg1, arg2, arg3,d);
+			}
 		}
 	}
 	
