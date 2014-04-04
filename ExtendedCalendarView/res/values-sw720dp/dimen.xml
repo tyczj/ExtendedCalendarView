@@ -2,6 +2,6 @@
 <resources>
     <dimen name="day_margin">88dp</dimen>
     <dimen name="text_height_width">30dp</dimen>
-    <dimen name="min_cell_height">50dp</dimen>
+    <dimen name="min_cell_height">75dp</dimen>
     <dimen name="min_cell_width">50dp</dimen>
 </resources>
