@@ -1,7 +1,7 @@
 ExtendedCalendarView
 ====================
 
-![ScreenShot](Screenshot_2014-01-10-19-57-06_framed.png)
+![ScreenShot](https://raw.githubusercontent.com/tyczj/ExtendedCalendarView/master/ExtendedCalendarView/Screenshot_2014-04-04-18-11-16.png)
 
 Currently there is no easy way of showing a calendar with the ability to display events on days, ExtendedCalendarView is meant to solve that problem.
 
