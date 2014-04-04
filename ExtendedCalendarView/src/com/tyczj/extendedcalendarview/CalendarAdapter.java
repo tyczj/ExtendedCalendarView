@@ -2,6 +2,7 @@ package com.tyczj.extendedcalendarview;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -93,8 +95,17 @@ public class CalendarAdapter extends BaseAdapter{
 		}else{
 			
 	        v = vi.inflate(R.layout.day_view, null);
+			FrameLayout today = (FrameLayout)v.findViewById(R.id.today_frame);
+			Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+			Day d = dayList.get(position);
+			if(d.getYear() == cal.get(Calendar.YEAR) && d.getMonth() == cal.get(Calendar.MONTH) && d.getDay() == cal.get(Calendar.DAY_OF_MONTH)){
+				today.setVisibility(View.VISIBLE);
+			}else{
+				today.setVisibility(View.GONE);
+			}
 			
 			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
+			
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
 			ImageView iv = (ImageView)v.findViewById(R.id.imageView1);
 			ImageView blue = (ImageView)v.findViewById(R.id.imageView2);

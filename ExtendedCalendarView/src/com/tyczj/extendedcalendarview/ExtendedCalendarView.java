@@ -11,6 +11,9 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -33,6 +36,14 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	private TextView month;
 	private RelativeLayout base;
 	private ImageView next,prev;
+	private int gestureType = 0;
+	private final GestureDetector calendarGesture = new GestureDetector(context,new GestureListener());
+	
+	public static final int NO_GESTURE = 0;
+	public static final int LEFT_RIGHT_GESTURE = 1;
+	public static final int UP_DOWN_GESTURE = 2;
+	private static final int SWIPE_MIN_DISTANCE = 120;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 	
 	public interface OnDayClickListener{
 		public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day);
@@ -87,8 +98,8 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		month.setId(2);
 		month.setLayoutParams(params);
 		month.setTextAppearance(context, android.R.attr.textAppearanceLarge);
-		month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US));
-		month.setTextSize(30);
+		month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "+cal.get(Calendar.YEAR));
+		month.setTextSize(25);
 		
 		base.addView(month);
 		
@@ -108,7 +119,6 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		addView(base);
 		
 		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-//		params.topMargin = 20;
 		params.bottomMargin = 20;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -124,8 +134,40 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		
 		mAdapter = new CalendarAdapter(context,cal);
 		calendar.setAdapter(mAdapter);
+		calendar.setOnTouchListener(new OnTouchListener() {
+			
+	        @Override
+	        public boolean onTouch(View v, MotionEvent event) {
+	            return calendarGesture.onTouchEvent(event);
+	        }
+	    });
 		
 		addView(calendar);
+	}
+
+	private class GestureListener extends SimpleOnGestureListener {
+	    @Override
+	    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,float velocityY) {
+	    	
+	    	if(gestureType == LEFT_RIGHT_GESTURE){
+	    		if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+		            nextMonth();
+		            return true; // Right to left
+		        } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+		            previousMonth();
+		            return true; // Left to right
+		        }
+	    	}else if(gestureType == UP_DOWN_GESTURE){
+	        	if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+		        	nextMonth();
+		            return true; // Bottom to top
+		        } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+		        	previousMonth();
+		            return true; // Top to bottom
+		        }
+	        }
+	        return false;
+	    }
 	}
 
 	@Override
@@ -175,29 +217,37 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	public void onClick(View v) {
 		switch(v.getId()){
 		case 1:
-			if(cal.get(Calendar.MONTH) == cal.getActualMinimum(Calendar.MONTH)) {				
-				cal.set((cal.get(Calendar.YEAR)-1),cal.getActualMaximum(Calendar.MONTH),1);
-			} else {
-				cal.set(Calendar.MONTH,cal.get(Calendar.MONTH)-1);
-			}
-			rebuildCalendar();
+			previousMonth();
 			break;
 		case 3:
-			if(cal.get(Calendar.MONTH) == cal.getActualMaximum(Calendar.MONTH)) {				
-				cal.set((cal.get(Calendar.YEAR)+1),cal.getActualMinimum(Calendar.MONTH),1);
-			} else {
-				cal.set(Calendar.MONTH,cal.get(Calendar.MONTH)+1);
-			}
-			rebuildCalendar();
+			nextMonth();
 			break;
 		default:
 			break;
 		}
 	}
 	
+	private void previousMonth(){
+		if(cal.get(Calendar.MONTH) == cal.getActualMinimum(Calendar.MONTH)) {				
+			cal.set((cal.get(Calendar.YEAR)-1),cal.getActualMaximum(Calendar.MONTH),1);
+		} else {
+			cal.set(Calendar.MONTH,cal.get(Calendar.MONTH)-1);
+		}
+		rebuildCalendar();
+	}
+	
+	private void nextMonth(){
+		if(cal.get(Calendar.MONTH) == cal.getActualMaximum(Calendar.MONTH)) {				
+			cal.set((cal.get(Calendar.YEAR)+1),cal.getActualMinimum(Calendar.MONTH),1);
+		} else {
+			cal.set(Calendar.MONTH,cal.get(Calendar.MONTH)+1);
+		}
+		rebuildCalendar();
+	}
+	
 	private void rebuildCalendar(){
 		if(month != null){
-			month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()));
+			month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "+cal.get(Calendar.YEAR));
 			refreshCalendar();
 		}
 	}
@@ -302,6 +352,18 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	 */
 	public void setNextMonthButtonImageDrawable(Drawable drawable){
 		next.setImageDrawable(drawable);
+	}
+	
+	/**
+	 * 
+	 * @param gestureType
+	 * 
+	 * Allow swiping the calendar left/right or up/down to change the month. 
+	 * 
+	 * Default value no gesture
+	 */
+	public void setGesture(int gestureType){
+		this.gestureType = gestureType;
 	}
 
 }

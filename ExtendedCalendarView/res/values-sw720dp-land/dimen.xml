@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="day_margin">158dp</dimen>
+    <dimen name="text_height_width">30dp</dimen>
+    <dimen name="min_cell_height">50dp</dimen>
+    <dimen name="min_cell_width">50dp</dimen>
 </resources>
