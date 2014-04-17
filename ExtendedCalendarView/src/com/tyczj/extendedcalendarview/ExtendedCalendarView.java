@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -21,15 +19,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.View.OnClickListener;
 
-public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,OnCreateContextMenuListener,
+public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,
 	OnClickListener{
 	
 	private Context context;
 	private OnDayClickListener dayListener;
-	private OnDayContextMenuListener contextListener;
 	private GridView calendar;
 	private CalendarAdapter mAdapter;
 	private Calendar cal;
@@ -47,10 +43,6 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	
 	public interface OnDayClickListener{
 		public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day);
-	}
-	
-	public interface OnDayContextMenuListener{
-		public void onDayContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo);
 	}
 
 	public ExtendedCalendarView(Context context) {
@@ -190,26 +182,6 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		if(calendar != null){
 			dayListener = listener;
 			calendar.setOnItemClickListener(this);
-		}
-	}
-	
-	/**
-	 * 
-	 * @param contextListener
-	 * 
-	 * Set a context menu for days of the month
-	 */
-	public void setOnCreateContextMenuListener(OnDayContextMenuListener contextListener){
-		if(calendar != null){
-			this.contextListener = contextListener;
-			calendar.setOnCreateContextMenuListener(this);
-		}
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
-		if(contextListener != null){
-			contextListener.onDayContextMenu(menu, v, menuInfo);
 		}
 	}
 

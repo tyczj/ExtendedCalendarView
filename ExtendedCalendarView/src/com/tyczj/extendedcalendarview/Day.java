@@ -131,8 +131,9 @@ public class Day{
 					event.setColor(c.getInt(6));
 					events.add(event);
 				}while(c.moveToNext());	
+				c.close();
 			}
-			c.close();
+			
 			return null;
 		}
 		
