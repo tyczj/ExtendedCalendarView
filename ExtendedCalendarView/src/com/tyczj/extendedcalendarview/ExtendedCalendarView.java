@@ -1,8 +1,5 @@
 package com.tyczj.extendedcalendarview;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,14 +12,17 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.view.View.OnCreateContextMenuListener;
-import android.view.View.OnClickListener;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,OnCreateContextMenuListener,
 	OnClickListener{
@@ -133,7 +133,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		calendar.setDrawSelectorOnTop(true);
 		
 		mAdapter = new CalendarAdapter(context,cal);
-		calendar.setAdapter(mAdapter);
+		this.setAdapter(mAdapter);
 		calendar.setOnTouchListener(new OnTouchListener() {
 			
 	        @Override
@@ -144,6 +144,11 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		
 		addView(calendar);
 	}
+
+    public void setAdapter(CalendarAdapter adapter) {
+        mAdapter = adapter;
+        calendar.setAdapter(mAdapter);
+    }
 
 	private class GestureListener extends SimpleOnGestureListener {
 	    @Override

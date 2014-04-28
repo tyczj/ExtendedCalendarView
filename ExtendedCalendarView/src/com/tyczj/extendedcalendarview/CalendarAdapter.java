@@ -21,12 +21,12 @@ import android.widget.TextView;
 public class CalendarAdapter extends BaseAdapter{
 	
 	static final int FIRST_DAY_OF_WEEK =0;
-	Context context;
-	Calendar cal;
+	protected Context context;
+	protected Calendar cal;
 	public String[] days;
 //	OnAddNewEventClick mAddEvent;
 	
-	ArrayList<Day> dayList = new ArrayList<Day>();
+	protected ArrayList<Day> dayList = new ArrayList<Day>();
 	
 	public CalendarAdapter(Context context, Calendar cal){
 		this.cal = cal;
