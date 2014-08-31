@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 import android.text.format.Time;
 import android.widget.BaseAdapter;
 
-public class Day{
+class Day{
 	
 	int startDay;
 	int monthEndDay;
