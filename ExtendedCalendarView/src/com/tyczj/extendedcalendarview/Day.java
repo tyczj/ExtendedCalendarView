@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 import android.text.format.Time;
 import android.widget.BaseAdapter;
 
-class Day{
+public class Day{
 	
 	int startDay;
 	int monthEndDay;
@@ -24,7 +24,7 @@ class Day{
 	BaseAdapter adapter;
 	ArrayList<Event> events = new ArrayList<Event>();
 	
-	public Day(Context context,int day, int year, int month){
+	Day(Context context,int day, int year, int month){
 		this.day = day;
 		this.year = year;
 		this.month = month;
